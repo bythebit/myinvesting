@@ -104,27 +104,6 @@
         }
         .theme-toggle-btn:hover { background-color: var(--border-color); transform: translateY(-1px); }
 
-        /* 로그인 버튼 & 프로필 */
-        .login-btn {
-            background-color: var(--text-main); color: var(--bg-card);
-            border: none; padding: 8px 16px; border-radius: 20px;
-            font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: opacity 0.2s;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .login-btn:hover { opacity: 0.9; }
-        
-        .user-profile {
-            display: none; align-items: center; gap: 10px;
-        }
-        .user-avatar {
-            width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
-            border: 2px solid var(--accent-color);
-        }
-        .logout-btn {
-            font-size: 0.85rem; color: var(--text-sub); background: none; border: none; 
-            cursor: pointer; text-decoration: underline;
-        }
-
         /* --- 위젯 & 메인 --- */
         .tradingview-widget-container {
             margin-bottom: 0; border-bottom: 1px solid var(--border-color); 
@@ -159,59 +138,6 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         tv-mini-chart:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-
-        /* Watchlist 섹션 스타일 */
-        .watchlist-container {
-            background: var(--bg-card); border-radius: 16px; padding: 40px; 
-            text-align: center; border: 1px dashed var(--border-color); margin-bottom: 60px;
-        }
-        .watchlist-login-msg { color: var(--text-sub); font-size: 1rem; margin-bottom: 20px; }
-        
-        .watchlist-controls {
-            display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; align-items: flex-end;
-        }
-        .input-group { display: flex; gap: 10px; }
-        
-        .watchlist-input {
-            padding: 10px 16px; border: 1px solid var(--border-color); border-radius: 8px;
-            background: var(--bg-body); color: var(--text-main); outline: none; width: 220px;
-        }
-        .watchlist-add-btn {
-            background: var(--accent-color); color: white; border: none; padding: 0 20px;
-            border-radius: 8px; cursor: pointer; font-weight: 600;
-        }
-        
-        /* 인기 종목 태그 스타일 */
-        .popular-stocks {
-            display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;
-        }
-        .stock-tag {
-            background: var(--bg-body); border: 1px solid var(--border-color);
-            padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; color: var(--text-sub);
-            cursor: pointer; transition: all 0.2s; font-weight: 500;
-        }
-        .stock-tag:hover {
-            border-color: var(--accent-color); color: var(--accent-color);
-            background: rgba(37, 99, 235, 0.05);
-        }
-        
-        /* Watchlist 아이템 래퍼 (사이즈 고정) */
-        .chart-wrapper { 
-            position: relative; width: 100%; height: 200px; /* 사이즈 고정 */
-            border-radius: 16px; overflow: hidden; background-color: var(--bg-card);
-            box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .chart-wrapper:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-        .chart-wrapper tv-mini-chart { width: 100%; height: 100%; }
-        
-        .chart-del-btn {
-            position: absolute; top: 10px; right: 10px; z-index: 10;
-            background: rgba(0,0,0,0.6); color: white; border-radius: 50%;
-            width: 24px; height: 24px; border: none; cursor: pointer; display: none;
-            align-items: center; justify-content: center; font-size: 12px;
-        }
-        .chart-wrapper:hover .chart-del-btn { display: flex; }
-        .chart-del-btn:hover { background: var(--delete-color); }
 
         /* 콘텐츠 그리드 */
         .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
@@ -294,7 +220,7 @@
         footer a { color: var(--text-sub); text-decoration: none; font-size: 0.85rem; }
         #adminToggle { background: none; border: none; color: var(--text-sub); font-size: 0.85rem; cursor: pointer; margin-top: 16px; text-decoration: underline; opacity: 0.6; }
 
-        /* 약관 및 개인정보 스타일 */
+         /* 약관 및 개인정보 스타일 */
         .policy-content {
             line-height: 1.8; color: var(--text-sub); text-align: left;
         }
@@ -314,10 +240,6 @@
             main { padding-top: 40px; }
             #fullBlogList { grid-template-columns: 1fr; }
             .header-right { gap: 12px; }
-            .watchlist-controls { align-items: stretch; }
-            .input-group { flex-direction: column; }
-            .watchlist-input { width: 100%; }
-            .popular-stocks { justify-content: center; }
         }
     </style>
     <!-- 구글 애드센스 -->
@@ -338,17 +260,6 @@
                     <a id="nav-news" href="#news" onclick="showPage('home')">NEWS</a>
                     <a id="nav-blog" onclick="showPage('blog')">BLOG</a>
                 </nav>
-                
-                <!-- 구글 로그인 버튼 -->
-                <button id="googleLoginBtn" class="login-btn" onclick="handleGoogleLogin()">
-                    <span>Login</span>
-                </button>
-                
-                <!-- 로그인 후 프로필 (기본 숨김) -->
-                <div id="userProfile" class="user-profile">
-                    <img id="userAvatar" src="" alt="Profile" class="user-avatar">
-                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
-                </div>
 
                 <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">
                     <span id="themeIcon">🌙</span>
@@ -381,48 +292,10 @@
             
             <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-mini-chart.js"></script>
 
-            <!-- [NEW] 나만의 관심종목 섹션 (가장 상단) -->
-            <div id="my-watchlist-section" style="margin-bottom: 60px;">
-                <div class="section-header">
-                    <h2 style="margin-top: 20px;">My Watchlist</h2>
-                    <span class="subtitle" style="color: var(--accent-color); margin-top: 20px;">Personal Dashboard</span>
-                </div>
-                
-                <!-- 1. 로그인 전 표시 화면 -->
-                <div id="watchlist-logout-view" class="watchlist-container">
-                    <p class="watchlist-login-msg">Log in with Google to create your own stock watchlist.</p>
-                    <button class="login-btn" style="margin:0 auto; background: var(--accent-color);" onclick="handleGoogleLogin()">
-                        Start with Google
-                    </button>
-                </div>
-
-                <!-- 2. 로그인 후 표시 화면 -->
-                <div id="watchlist-login-view" style="display: none;">
-                    <div class="watchlist-controls">
-                        <div class="input-group">
-                            <input type="text" id="newStockInput" class="watchlist-input" placeholder="Symbol (e.g. NASDAQ:AAPL)">
-                            <button class="watchlist-add-btn" onclick="addToWatchlist()">Add</button>
-                        </div>
-                        <!-- 인기 종목 빠른 추가 버튼 -->
-                        <div class="popular-stocks">
-                            <span class="stock-tag" onclick="addToWatchlist('NASDAQ:AAPL')">Apple</span>
-                            <span class="stock-tag" onclick="addToWatchlist('NASDAQ:TSLA')">Tesla</span>
-                            <span class="stock-tag" onclick="addToWatchlist('NASDAQ:NVDA')">Nvidia</span>
-                            <span class="stock-tag" onclick="addToWatchlist('KRX:005930')">Samsung</span>
-                            <span class="stock-tag" onclick="addToWatchlist('BITSTAMP:BTCUSD')">Bitcoin</span>
-                        </div>
-                    </div>
-                    <!-- 내가 추가한 종목 리스트 -->
-                    <div class="mini-chart-grid" id="myWatchlistGrid">
-                        <p style="grid-column: 1/-1; text-align:center; color:var(--text-sub);">No stocks added yet.</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Market Overview -->
             <div class="section-header">
-                <h2>Market Overview</h2>
-                <span class="subtitle">Real-time Global Indices</span>
+                <h2 style="margin-top: 20px;">Market Overview</h2>
+                <span class="subtitle" style="margin-top: 20px;">Real-time Global Indices</span>
             </div>
 
             <div class="mini-chart-grid" id="widgetContainer">
@@ -589,9 +462,6 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-        // [NEW] Auth 관련 모듈 추가
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } 
-            from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy, serverTimestamp, updateDoc } 
             from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
@@ -608,135 +478,17 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
-        const auth = getAuth(app); // 인증 객체 생성
-
-        // --- 1. 로그인/로그아웃 로직 ---
-        const provider = new GoogleAuthProvider();
-
-        window.handleGoogleLogin = () => {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    console.log("Logged in:", result.user);
-                }).catch((error) => {
-                    console.error("Login Failed:", error);
-                    alert("로그인 실패: " + error.code + "\n" + error.message);
-                });
-        };
-
-        window.handleLogout = () => {
-            signOut(auth).then(() => {
-                console.log("Logged out");
-                document.getElementById('myWatchlistGrid').innerHTML = "";
-            }).catch((error) => {
-                console.error("Logout Error:", error);
-            });
-        };
-
-        // --- 2. 인증 상태 감지 및 UI 변경 ---
-        let watchlistUnsubscribe = null; 
-
-        onAuthStateChanged(auth, (user) => {
-            const loginBtn = document.getElementById('googleLoginBtn');
-            const userProfile = document.getElementById('userProfile');
-            const userAvatar = document.getElementById('userAvatar');
-            const logoutView = document.getElementById('watchlist-logout-view');
-            const loginView = document.getElementById('watchlist-login-view');
-
-            if (user) {
-                // 로그인 상태
-                loginBtn.style.display = 'none';
-                userProfile.style.display = 'flex';
-                userAvatar.src = user.photoURL || 'https://via.placeholder.com/36';
-                
-                logoutView.style.display = 'none';
-                loginView.style.display = 'block';
-
-                startListeningWatchlist(user.uid);
-            } else {
-                // 로그아웃 상태
-                loginBtn.style.display = 'flex';
-                userProfile.style.display = 'none';
-                
-                logoutView.style.display = 'block';
-                loginView.style.display = 'none';
-
-                if (watchlistUnsubscribe) {
-                    watchlistUnsubscribe();
-                    watchlistUnsubscribe = null;
-                }
-            }
-        });
-
-        // --- 3. 관심종목(Watchlist) 기능 ---
-        function startListeningWatchlist(userId) {
-            const q = query(collection(db, `users/${userId}/watchlist`), orderBy("createdAt", "asc"));
-            
-            watchlistUnsubscribe = onSnapshot(q, (snapshot) => {
-                const grid = document.getElementById('myWatchlistGrid');
-                grid.innerHTML = "";
-
-                if (snapshot.empty) {
-                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:var(--text-sub); padding:20px;">Added stocks will appear here.</p>';
-                    return;
-                }
-
-                const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-
-                snapshot.forEach((docSnap) => {
-                    const item = docSnap.data();
-                    const id = docSnap.id;
-
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'chart-wrapper';
-
-                    const delBtn = document.createElement('button');
-                    delBtn.className = 'chart-del-btn';
-                    delBtn.innerHTML = '✕';
-                    delBtn.onclick = () => window.openDeleteModal(id, 'watchlist');
-
-                    const chart = document.createElement('tv-mini-chart');
-                    chart.setAttribute('symbol', item.symbol);
-                    chart.setAttribute('theme', theme);
-                    chart.setAttribute('autosize', '');
-
-                    wrapper.appendChild(delBtn);
-                    wrapper.appendChild(chart);
-                    grid.appendChild(wrapper);
-                });
-            });
-        }
-
-        window.addToWatchlist = async (presetSymbol) => {
-            const user = auth.currentUser;
-            if (!user) return alert("로그인이 필요합니다.");
-
-            let symbol = presetSymbol;
-            const input = document.getElementById('newStockInput');
-            
-            if (!symbol) {
-                symbol = input.value.trim();
-            }
-
-            if (!symbol) return alert("종목 코드를 입력해주세요.");
-
-            try {
-                await addDoc(collection(db, `users/${user.uid}/watchlist`), {
-                    symbol: symbol,
-                    createdAt: serverTimestamp()
-                });
-                input.value = "";
-            } catch (e) {
-                console.error("Error adding stock:", e);
-                alert("추가 중 오류가 발생했습니다.");
-            }
-        };
 
         // --- [기존] 블로그 기능 (유지) ---
         const randomImages = [
             "https://images.unsplash.com/photo-1611974765270-ca12586343bb?auto=format&fit=crop&w=600&q=80",
             "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80",
             "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&w=600&q=80"
+            "https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1535320903710-d9cf113d20c5?auto=format&fit=crop&w=600&q=80"
         ];
 
         let allBlogPosts = [];
@@ -906,7 +658,6 @@
 
     <!-- UI 스크립트 -->
     <script>
-        // --- 페이지 전환 기능 ---
         function showPage(pageId) {
             document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
             document.getElementById('nav-home').classList.remove('active');
