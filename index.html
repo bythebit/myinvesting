@@ -82,14 +82,19 @@
         .theme-toggle-btn:hover { background-color: rgba(255,255,255,0.1); }
         .theme-label { font-size: 0.8rem; font-weight: 500; }
 
-        /* --- TradingView 위젯 컨테이너 --- */
+        /* --- TradingView 위젯 컨테이너 (구분선 강화) --- */
         .tradingview-widget-container {
             margin-bottom: 0;
-            border-bottom: 1px solid var(--border-color);
+            /* 1. 확실한 구분선: 브랜드 컬러(파란색) 적용 */
+            border-bottom: 4px solid var(--accent-color); 
+            /* 2. 그림자 추가: 입체감 부여하여 띄워진 느낌 연출 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            position: relative; /* 그림자가 콘텐츠 위로 보이도록 설정 */
+            z-index: 10;
         }
 
         /* --- 메인 콘텐츠 --- */
-        main { padding-top: 120px; } /* 간격을 80px -> 120px로 확실하게 넓힘 */
+        main { padding-top: 180px; } /* 120px + 60px 추가하여 더 넓게 설정 */
 
         h2 { 
             margin-bottom: 20px; 
@@ -168,8 +173,8 @@
     <!-- 헤더 -->
     <header>
         <div class="container">
-            <!-- 로고: My Investing -->
-            <div class="logo">My <span>Investing</span></div>
+            <!-- 로고: BIT GGOBUK -->
+            <div class="logo">BIT <span>GGOBUK</span></div>
             
             <!-- 다크모드 토글 버튼 -->
             <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">
@@ -253,7 +258,7 @@
     </main>
 
     <footer>
-        <p>© 2024 My Investing. All rights reserved.</p>
+        <p>© 2026 My Investing. All rights reserved.</p>
     </footer>
 
     <script>
