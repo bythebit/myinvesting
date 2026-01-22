@@ -277,6 +277,37 @@
         #fullBlogList .blog-card {
             width: 100%;
         }
+        
+        .pagination {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .page-link {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .page-link:hover {
+            background-color: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .page-link.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
 
         /* 관리 버튼 그룹 */
         .card-actions {
@@ -494,6 +525,8 @@
                 <div id="fullBlogList">
                     <p style="color:var(--text-sub); font-size:0.9rem;">데이터를 불러오는 중...</p>
                 </div>
+                <!-- 페이지네이션 컨트롤 -->
+                <div id="pagination" class="pagination"></div>
             </div>
         </div>
 
@@ -609,109 +642,143 @@
             "https://images.unsplash.com/photo-1535320903710-d9cf113d20c5?auto=format&fit=crop&w=600&q=80"
         ];
 
+        let allBlogPosts = [];
         let currentDocs = [];
+        const postsPerPage = 9;
+        let currentPage = 1;
+
+        function createCard(post) {
+            const cardLink = document.createElement('a');
+            cardLink.href = post.url;
+            cardLink.target = "_blank";
+            cardLink.className = "blog-card";
+            
+            let imgUrl = post.image;
+            if (!imgUrl) imgUrl = randomImages[Math.floor(Math.random() * randomImages.length)];
+            
+            const img = document.createElement('img');
+            img.src = imgUrl;
+            img.className = "blog-thumbnail";
+            img.alt = post.title;
+            img.onerror = function() { this.onerror = null; this.src = randomImages[0]; };
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = "blog-info";
+            
+            const title = document.createElement('div');
+            title.className = "blog-title";
+            title.textContent = post.title;
+            
+            const date = document.createElement('div');
+            date.className = "blog-date";
+            let dateStr = "";
+            if (post.createdAt) {
+                const d = post.createdAt.toDate();
+                dateStr = `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+            }
+            date.textContent = dateStr;
+
+            infoDiv.appendChild(title);
+            infoDiv.appendChild(date);
+            
+            // 관리 버튼 그룹
+            const actionGroup = document.createElement('div');
+            actionGroup.className = 'card-actions';
+
+            const leftBtn = document.createElement('button');
+            leftBtn.className = 'action-icon-btn';
+            leftBtn.innerHTML = "◀";
+            leftBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); movePost(post.id, 'left'); };
+
+            const rightBtn = document.createElement('button');
+            rightBtn.className = 'action-icon-btn';
+            rightBtn.innerHTML = "▶";
+            rightBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); movePost(post.id, 'right'); };
+
+            const delBtn = document.createElement('button');
+            delBtn.className = 'action-icon-btn btn-delete';
+            delBtn.innerHTML = "✕"; 
+            delBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); window.openDeleteModal(post.id, 'blog'); };
+
+            actionGroup.appendChild(leftBtn);
+            actionGroup.appendChild(delBtn);
+            actionGroup.appendChild(rightBtn);
+
+            cardLink.appendChild(img);
+            cardLink.appendChild(infoDiv);
+            cardLink.appendChild(actionGroup);
+            return cardLink;
+        }
+
+        function renderBlogPage(page) {
+            currentPage = page;
+            const fullList = document.getElementById('fullBlogList');
+            fullList.innerHTML = "";
+
+            const startIndex = (page - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const postsToShow = allBlogPosts.slice(startIndex, endIndex);
+
+            postsToShow.forEach(post => {
+                fullList.appendChild(createCard(post));
+            });
+
+            renderPaginationControls();
+        }
+
+        function renderPaginationControls() {
+            const paginationContainer = document.getElementById('pagination');
+            paginationContainer.innerHTML = "";
+            const totalPages = Math.ceil(allBlogPosts.length / postsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = "#";
+                pageLink.textContent = i;
+                pageLink.className = "page-link";
+                if (i === currentPage) {
+                    pageLink.classList.add('active');
+                }
+                pageLink.onclick = (e) => {
+                    e.preventDefault();
+                    renderBlogPage(i);
+                }
+                paginationContainer.appendChild(pageLink);
+            }
+        }
 
         function startListeningBlog() {
-            // 모든 글 가져오기 (정렬: order)
             const q = query(collection(db, "blogPosts"), orderBy("order", "desc"));
             
             onSnapshot(q, (snapshot) => {
-                // 두 군데 타겟 엘리먼트
-                const homeList = document.getElementById('linksList'); // 홈 화면 (가로 스크롤)
-                const fullList = document.getElementById('fullBlogList'); // 블로그 페이지 (그리드)
-                
+                const homeList = document.getElementById('linksList');
                 homeList.innerHTML = ""; 
-                fullList.innerHTML = "";
                 
-                currentDocs = []; 
+                allBlogPosts = []; 
+                currentDocs = [];
 
                 if (snapshot.empty) {
                     homeList.innerHTML = "<p style='color:var(--text-sub)'>등록된 포스팅이 없습니다.</p>";
-                    fullList.innerHTML = "<p style='color:var(--text-sub)'>등록된 포스팅이 없습니다.</p>";
+                    document.getElementById('fullBlogList').innerHTML = "<p style='color:var(--text-sub)'>등록된 포스팅이 없습니다.</p>";
+                    renderPaginationControls();
                     return;
                 }
-
-                let count = 0; // [NEW] 카운터 추가
 
                 snapshot.forEach((docSnap) => {
                     const post = docSnap.data();
                     const id = docSnap.id;
-                    
+                    allBlogPosts.push({ id, ...post });
                     currentDocs.push({ id, ...post, ref: docSnap.ref });
-
-                    // 카드 생성 함수 (중복 코드 방지)
-                    function createCard() {
-                        const cardLink = document.createElement('a');
-                        cardLink.href = post.url;
-                        cardLink.target = "_blank";
-                        cardLink.className = "blog-card";
-                        
-                        let imgUrl = post.image;
-                        if (!imgUrl) imgUrl = randomImages[Math.floor(Math.random() * randomImages.length)];
-                        
-                        const img = document.createElement('img');
-                        img.src = imgUrl;
-                        img.className = "blog-thumbnail";
-                        img.alt = post.title;
-                        img.onerror = function() { this.onerror = null; this.src = randomImages[0]; };
-                        
-                        const infoDiv = document.createElement('div');
-                        infoDiv.className = "blog-info";
-                        
-                        const title = document.createElement('div');
-                        title.className = "blog-title";
-                        title.textContent = post.title;
-                        
-                        const date = document.createElement('div');
-                        date.className = "blog-date";
-                        let dateStr = "";
-                        if (post.createdAt) {
-                            const d = post.createdAt.toDate();
-                            dateStr = `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-                        }
-                        date.textContent = dateStr;
-
-                        infoDiv.appendChild(title);
-                        infoDiv.appendChild(date);
-                        
-                        // 관리 버튼 그룹
-                        const actionGroup = document.createElement('div');
-                        actionGroup.className = 'card-actions';
-
-                        const leftBtn = document.createElement('button');
-                        leftBtn.className = 'action-icon-btn';
-                        leftBtn.innerHTML = "◀";
-                        leftBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); movePost(id, 'left'); };
-
-                        const rightBtn = document.createElement('button');
-                        rightBtn.className = 'action-icon-btn';
-                        rightBtn.innerHTML = "▶";
-                        rightBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); movePost(id, 'right'); };
-
-                        const delBtn = document.createElement('button');
-                        delBtn.className = 'action-icon-btn btn-delete';
-                        delBtn.innerHTML = "✕"; 
-                        delBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); window.openDeleteModal(id, 'blog'); };
-
-                        actionGroup.appendChild(leftBtn);
-                        actionGroup.appendChild(delBtn);
-                        actionGroup.appendChild(rightBtn);
-
-                        cardLink.appendChild(img);
-                        cardLink.appendChild(infoDiv);
-                        cardLink.appendChild(actionGroup);
-                        return cardLink;
-                    }
-
-                    // 블로그 전체 목록 페이지엔 무조건 추가
-                    fullList.appendChild(createCard());
-
-                    // [NEW] 홈 화면엔 6개까지만 추가
-                    if (count < 6) {
-                        homeList.appendChild(createCard());
-                    }
-                    count++;
                 });
+                
+                // 홈 화면 6개
+                const homePosts = allBlogPosts.slice(0, 6);
+                homePosts.forEach(post => {
+                    homeList.appendChild(createCard(post));
+                });
+                
+                // 블로그 페이지 1페이지 렌더링
+                renderBlogPage(1);
             });
         }
 
