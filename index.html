@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- [중요] 외부 이미지(네이버 블로그 등) 엑박 방지용 태그 -->
+    <meta name="referrer" content="no-referrer">
     <title>BIT GGOBUK - Professional Investing Insight</title>
     <!-- 폰트 로드 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
@@ -222,7 +224,7 @@
             -webkit-overflow-scrolling: touch; /* 모바일 부드러운 스크롤 */
         }
 
-        /* 스크롤바 스타일링 (선택사항) */
+        /* 스크롤바 스타일링 */
         #linksList::-webkit-scrollbar {
             height: 8px;
         }
@@ -237,7 +239,7 @@
             background: var(--text-sub); 
         }
 
-        /* 블로그 카드 스타일 수정 (고정 너비) */
+        /* 블로그 카드 스타일 */
         .blog-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -253,7 +255,7 @@
             /* 가로 스크롤을 위한 고정 너비 설정 */
             min-width: 280px;
             max-width: 280px;
-            flex-shrink: 0; /* 찌그러짐 방지 */
+            flex-shrink: 0; 
         }
 
         .blog-card:hover {
@@ -287,7 +289,7 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            white-space: normal; /* 말줄임 위해 normal로 복구 */
+            white-space: normal;
         }
 
         .blog-date {
