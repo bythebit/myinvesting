@@ -168,19 +168,42 @@
         .watchlist-login-msg { color: var(--text-sub); font-size: 1rem; margin-bottom: 20px; }
         
         .watchlist-controls {
-            display: flex; gap: 10px; margin-bottom: 20px; justify-content: flex-end;
+            display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; align-items: flex-end;
         }
+        .input-group { display: flex; gap: 10px; }
+        
         .watchlist-input {
             padding: 10px 16px; border: 1px solid var(--border-color); border-radius: 8px;
-            background: var(--bg-body); color: var(--text-main); outline: none; width: 200px;
+            background: var(--bg-body); color: var(--text-main); outline: none; width: 220px;
         }
         .watchlist-add-btn {
             background: var(--accent-color); color: white; border: none; padding: 0 20px;
             border-radius: 8px; cursor: pointer; font-weight: 600;
         }
         
-        /* Watchlist 아이템 래퍼 (삭제 버튼 포함) */
-        .chart-wrapper { position: relative; }
+        /* 인기 종목 태그 스타일 */
+        .popular-stocks {
+            display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;
+        }
+        .stock-tag {
+            background: var(--bg-body); border: 1px solid var(--border-color);
+            padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; color: var(--text-sub);
+            cursor: pointer; transition: all 0.2s; font-weight: 500;
+        }
+        .stock-tag:hover {
+            border-color: var(--accent-color); color: var(--accent-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        /* Watchlist 아이템 래퍼 (사이즈 고정) */
+        .chart-wrapper { 
+            position: relative; width: 100%; height: 200px; /* 사이즈 고정 */
+            border-radius: 16px; overflow: hidden; background-color: var(--bg-card);
+            box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .chart-wrapper:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .chart-wrapper tv-mini-chart { width: 100%; height: 100%; }
+        
         .chart-del-btn {
             position: absolute; top: 10px; right: 10px; z-index: 10;
             background: rgba(0,0,0,0.6); color: white; border-radius: 50%;
@@ -256,6 +279,7 @@
             text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
             animation: modalPop 0.3s ease; max-height: 80vh; overflow-y: auto;
         }
+        .modal-content.large { width: 600px; text-align: left; }
         @keyframes modalPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .modal-content input { width: 100%; padding: 14px; margin-bottom: 24px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-body); color: var(--text-main); }
         .modal-buttons { display: flex; gap: 12px; }
@@ -267,9 +291,7 @@
         .error-msg { color: var(--delete-color); font-size: 0.9rem; margin-top: 12px; display: none; font-weight: 500;}
 
         footer { text-align: center; padding: 60px 0; color: var(--text-sub); border-top: 1px solid var(--border-color); margin-top: 80px; font-size: 0.9rem; }
-        footer a { color: var(--text-sub); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-        footer a:hover { color: var(--text-main); text-decoration: underline; }
-        
+        footer a { color: var(--text-sub); text-decoration: none; font-size: 0.85rem; }
         #adminToggle { background: none; border: none; color: var(--text-sub); font-size: 0.85rem; cursor: pointer; margin-top: 16px; text-decoration: underline; opacity: 0.6; }
 
         /* 약관 및 개인정보 스타일 */
@@ -292,6 +314,10 @@
             main { padding-top: 40px; }
             #fullBlogList { grid-template-columns: 1fr; }
             .header-right { gap: 12px; }
+            .watchlist-controls { align-items: stretch; }
+            .input-group { flex-direction: column; }
+            .watchlist-input { width: 100%; }
+            .popular-stocks { justify-content: center; }
         }
     </style>
     <!-- 구글 애드센스 -->
@@ -373,8 +399,18 @@
                 <!-- 2. 로그인 후 표시 화면 -->
                 <div id="watchlist-login-view" style="display: none;">
                     <div class="watchlist-controls">
-                        <input type="text" id="newStockInput" class="watchlist-input" placeholder="Symbol (e.g. NASDAQ:AAPL)">
-                        <button class="watchlist-add-btn" onclick="addToWatchlist()">Add</button>
+                        <div class="input-group">
+                            <input type="text" id="newStockInput" class="watchlist-input" placeholder="Symbol (e.g. NASDAQ:AAPL)">
+                            <button class="watchlist-add-btn" onclick="addToWatchlist()">Add</button>
+                        </div>
+                        <!-- 인기 종목 빠른 추가 버튼 -->
+                        <div class="popular-stocks">
+                            <span class="stock-tag" onclick="addToWatchlist('NASDAQ:AAPL')">Apple</span>
+                            <span class="stock-tag" onclick="addToWatchlist('NASDAQ:TSLA')">Tesla</span>
+                            <span class="stock-tag" onclick="addToWatchlist('NASDAQ:NVDA')">Nvidia</span>
+                            <span class="stock-tag" onclick="addToWatchlist('KRX:005930')">Samsung</span>
+                            <span class="stock-tag" onclick="addToWatchlist('BITSTAMP:BTCUSD')">Bitcoin</span>
+                        </div>
                     </div>
                     <!-- 내가 추가한 종목 리스트 -->
                     <div class="mini-chart-grid" id="myWatchlistGrid">
@@ -656,7 +692,6 @@
                     const delBtn = document.createElement('button');
                     delBtn.className = 'chart-del-btn';
                     delBtn.innerHTML = '✕';
-                    // [중요] 모달을 사용해 삭제 (타입: watchlist)
                     delBtn.onclick = () => window.openDeleteModal(id, 'watchlist');
 
                     const chart = document.createElement('tv-mini-chart');
@@ -671,12 +706,17 @@
             });
         }
 
-        window.addToWatchlist = async () => {
+        window.addToWatchlist = async (presetSymbol) => {
             const user = auth.currentUser;
             if (!user) return alert("로그인이 필요합니다.");
 
+            let symbol = presetSymbol;
             const input = document.getElementById('newStockInput');
-            const symbol = input.value.trim();
+            
+            if (!symbol) {
+                symbol = input.value.trim();
+            }
+
             if (!symbol) return alert("종목 코드를 입력해주세요.");
 
             try {
