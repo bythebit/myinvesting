@@ -721,44 +721,49 @@
     <!-- UI 스크립트 -->
     <script>
         function showPage(pageId) {
+            // Hide all page-views and remove active class from nav links
             document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
-            
-            const navLinks = document.querySelectorAll('.top-menu a');
-            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active'));
 
-            const view = document.getElementById(pageId + '-view');
+            // Determine the correct view to show. 'home' and 'news' are on the 'main-view'.
+            const viewId = (pageId === 'home' || pageId === 'news') ? 'main' : pageId;
+            const view = document.getElementById(viewId + '-view');
             if (view) {
                 view.classList.add('active');
             }
 
-            const navLink = document.getElementById('nav-' + pageId);
+            // Determine the correct nav link to activate. 'news' section should keep 'home' active.
+            const navId = (pageId === 'news') ? 'home' : pageId;
+            const navLink = document.getElementById('nav-' + navId);
             if (navLink) {
                 navLink.classList.add('active');
-            } else if (pageId === 'main') {
-                // "news" is on the main page, so highlight home
-                document.getElementById('nav-home').classList.add('active');
             }
-
-            window.scrollTo(0, 0);
         }
 
         function router() {
             let pageId = window.location.hash.substring(1);
-            if (!pageId || pageId === 'news') {
-                pageId = 'main';
-            }
-            
-            // Special handling for pages without top nav links
-            const nonNavPages = ['terms', 'privacy'];
-            if (nonNavPages.includes(pageId)) {
-                 document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active'));
+            if (!pageId) {
+                pageId = 'home';
             }
 
             showPage(pageId);
+
+            // Handle scrolling after the view is shown
+            if (pageId === 'news') {
+                setTimeout(() => {
+                    const section = document.getElementById('news');
+                    if (section) {
+                        // Scroll the section into view
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100); // A small delay ensures the view is rendered
+            } else {
+                // For all other pages, scroll to the top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         window.addEventListener('hashchange', router);
-        window.addEventListener('DOMContentLoaded', router);
 
         // --- TradingView 위젯 동적 로드 ---
         function createWidgetScript(src, config) {
@@ -854,8 +859,6 @@
 
             if (isDark) {
                 themeIcon.textContent = '☀️';
-            } else {
-                themeIcon.textContent = '🌙';
             }
             updateCharts(newTheme);
             loadWidgets(newTheme);
@@ -870,6 +873,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Load theme
             const savedTheme = localStorage.getItem('theme');
             let initialTheme = 'light';
             if (savedTheme === 'dark') {
@@ -879,6 +883,9 @@
             }
             updateCharts(initialTheme);
             loadWidgets(initialTheme);
+            
+            // Initial routing
+            router();
         });
     </script>
 </body>
