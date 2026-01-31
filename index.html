@@ -253,13 +253,13 @@
     <!-- 헤더 -->
     <header>
         <div class="container">
-            <div class="logo" onclick="showPage('home')">FEED <span>MONEY</span></div>
+            <div class="logo" onclick="window.location.hash = '#home'">FEED <span>MONEY</span></div>
             <div class="header-right">
                 <nav class="top-menu">
-                    <!-- 메뉴 클릭 시 페이지 전환 함수 호출 -->
-                    <a id="nav-home" onclick="showPage('home')" class="active">HOME</a>
-                    <a id="nav-news" href="#news" onclick="showPage('home')">NEWS</a>
-                    <a id="nav-blog" onclick="showPage('blog')">BLOG</a>
+                    <a id="nav-home" href="#home" class="active">HOME</a>
+                    <a id="nav-news" href="#news">NEWS</a>
+                    <a id="nav-blog" href="#blog">BLOG</a>
+                    <a id="nav-about" href="#about">ABOUT</a>
                 </nav>
 
                 <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">
@@ -292,6 +292,12 @@
         <div id="main-view" class="page-view active">
             
             <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-mini-chart.js"></script>
+
+            <!-- Hero Section -->
+            <div style="text-align: center; margin: 40px 0;">
+                <h1 style="font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 800;">Welcome to FeedMoney</h1>
+                <p style="font-size: 1.1rem; color: var(--text-sub); max-width: 600px; margin: 16px auto;">Your daily source for financial insights. We provide real-time data, market news, and in-depth analysis to help you navigate the complexities of the financial world.</p>
+            </div>
 
             <!-- Market Overview -->
             <div class="section-header">
@@ -383,20 +389,35 @@
         <div id="terms-view" class="page-view">
             <div class="section-header">
                 <h2 style="margin-top: 20px;">Terms of Service</h2>
-                <span class="subtitle" style="margin-top: 20px;">Legal Information</span>
+                <span class="subtitle" style="margin-top: 20px;">Effective Date: 2026-01-31</span>
             </div>
             <div class="card policy-content">
-                <h3>1. Introduction</h3>
-                <p>Welcome to FeedMoney. By accessing this website, we assume you accept these terms and conditions. Do not continue to use FeedMoney if you do not agree to take all of the terms and conditions stated on this page.</p>
+                <h3>1. Acceptance of Terms</h3>
+                <p>Welcome to FeedMoney ("the Site"). By accessing or using our Site, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any part of these terms, you are prohibited from using or accessing this site.</p>
                 
-                <h3>2. Disclaimer</h3>
-                <p>All content provided on FeedMoney is for informational purposes only. The owner of this blog makes no representations as to the accuracy or completeness of any information on this site or found by following any link on this site. The information does not constitute financial advice. You should consult with a professional financial advisor before making any investment decisions.</p>
+                <h3>2. Informational Purposes Only</h3>
+                <p>All content provided on FeedMoney, including articles, data, and market analysis, is for informational purposes only. The information does not constitute financial advice, investment advice, trading advice, or any other sort of advice, and you should not treat any of the Site's content as such. FeedMoney does not recommend that any financial instrument should be bought, sold, or held by you. You should conduct your own due diligence and consult a qualified financial advisor before making any investment decisions.</p>
 
-                <h3>3. Intellectual Property Rights</h3>
-                <p>Unless otherwise stated, FeedMoney and/or its licensors own the intellectual property rights for all material on FeedMoney. All intellectual property rights are reserved.</p>
+                <h3>3. Accuracy of Information</h3>
+                <p>The owner of this site makes no representations as to the accuracy, completeness, suitability, or validity of any information on this site and will not be liable for any errors, omissions, or delays in this information or any losses, injuries, or damages arising from its display or use. All information is provided on an as-is basis.</p>
 
-                <h3>4. Changes to Terms</h3>
-                <p>We reserve the right to amend these terms and conditions at any time. By using this website, you are expected to review these terms on a regular basis.</p>
+                <h3>4. User Conduct</h3>
+                <p>You agree not to use the Site for any unlawful purpose or any purpose prohibited under this clause. You agree not to use the Site in any way that could damage the Site, the services, or the general business of FeedMoney. This includes, but is not limited to, harassing or abusing other users, violating their intellectual property rights, or spamming.</p>
+
+                <h3>5. Third-Party Links and Services</h3>
+                <p>The Site may contain links to third-party websites or services that are not owned or controlled by FeedMoney. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You further acknowledge and agree that FeedMoney shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods or services available on or through any such websites or services.</p>
+
+                <h3>6. Intellectual Property</h3>
+                <p>Unless otherwise stated, FeedMoney and/or its licensors own the intellectual property rights for all material on FeedMoney. All intellectual property rights are reserved. You may access this from FeedMoney for your own personal use subjected to restrictions set in these terms and conditions.</p>
+
+                <h3>7. Disclaimer of Warranties</h3>
+                <p>The Site is provided "as is" and "as available" without any warranties of any kind, either express or implied, including, but not limited to, the implied warranties of merchantability, fitness for a particular purpose, or non-infringement. FeedMoney makes no warranty that the Site will meet your requirements, be available on an uninterrupted, secure, or error-free basis, or that the information provided will be accurate, reliable, or correct.</p>
+
+                <h3>8. Limitation of Liability</h3>
+                <p>In no event shall FeedMoney, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Site.</p>
+
+                <h3>9. Changes to Terms</h3>
+                <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. By continuing to access or use our Site after those revisions become effective, you agree to be bound by the revised terms.</p>
             </div>
         </div>
 
@@ -404,20 +425,60 @@
         <div id="privacy-view" class="page-view">
             <div class="section-header">
                 <h2 style="margin-top: 20px;">Privacy Policy</h2>
-                <span class="subtitle" style="margin-top: 20px;">Your Data Security</span>
+                <span class="subtitle" style="margin-top: 20px;">Effective Date: 2026-01-31</span>
             </div>
             <div class="card policy-content">
-                <h3>1. Information We Collect</h3>
-                <p>We may collect personal identification information from Users in a variety of ways, including, but not limited to, when Users visit our site, subscribe to the newsletter, and in connection with other activities, services, features or resources we make available on our Site.</p>
+                <h3>1. Introduction</h3>
+                <p>FeedMoney ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.</p>
 
-                <h3>2. Web Browser Cookies</h3>
-                <p>Our Site may use "cookies" to enhance User experience. User's web browser places cookies on their hard drive for record-keeping purposes and sometimes to track information about them.</p>
+                <h3>2. Information We Collect</h3>
+                <p>We may collect information about you in a variety of ways. The information we may collect on the Site includes:</p>
+                <ul>
+                    <li><strong>Log and Usage Data:</strong> Our servers automatically collect log and usage data when you access the Site, which includes your IP address, browser type, operating system, access times, and the pages you have viewed directly before and after accessing the Site.</li>
+                    <li><strong>Personal Information:</strong> We do not collect personal identification information like your name or email address unless you voluntarily provide it to us (for example, by contacting us).</li>
+                </ul>
 
-                <h3>3. Third-party Websites</h3>
-                <p>Users may find advertising or other content on our Site that link to the sites and services of our partners, suppliers, advertisers, sponsors, licensors and other third parties. We do not control the content or links that appear on these sites.</p>
+                <h3>3. Use of Your Information</h3>
+                <p>Having accurate information permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:</p>
+                <ul>
+                    <li>Monitor and analyze usage and trends to improve your experience with the Site.</li>
+                    <li>Ensure the security of our Site.</li>
+                    <li>Deliver targeted advertising to you.</li>
+                </ul>
 
-                <h3>4. Google AdSense</h3>
-                <p>Some of the ads may be served by Google. Google's use of the DART cookie enables it to serve ads to Users based on their visit to our Site and other sites on the Internet. DART uses "non personally identifiable information" and does NOT track personal information about you.</p>
+                <h3>4. Web Browser Cookies</h3>
+                <p>Our Site may use "cookies" to enhance your experience. A cookie is a string of information that a website stores on a visitor’s computer, and that the visitor’s browser provides to the website each time the visitor returns. We use cookies to help us identify and track visitors, their usage of the Site, and their website access preferences. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Site.</p>
+
+                <h3>5. Third-Party & Google AdSense</h3>
+                <p>We may use third-party advertising companies to serve ads when you visit the Site. These companies may use information about your visits to our Site and other websites that are contained in web cookies in order to provide advertisements about goods and services of interest to you.</p>
+                <p>Some of the ads may be served by Google. Google's use of the DART cookie enables it to serve ads to Users based on their visit to our Site and other sites on the Internet. DART uses "non-personally identifiable information" and does NOT track personal information about you, such as your name, email address, physical address, etc. You may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy at <a href="https://policies.google.com/technologies/ads" target="_blank">https://policies.google.com/technologies/ads</a>.</p>
+            
+                <h3>6. Data Security</h3>
+                <p>We use administrative, technical, and physical security measures to help protect your information. While we have taken reasonable steps to secure the information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.</p>
+
+                <h3>7. Links to Other Websites</h3>
+                <p>Our Site may contain links to other websites of interest. However, once you have used these links to leave our site, you should note that we do not have any control over that other website. Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst visiting such sites and such sites are not governed by this privacy statement.</p>
+
+                <h3>8. Children's Privacy</h3>
+                <p>Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If you are a parent or guardian and you are aware that your child has provided us with Personal Data, please contact us.</p>
+            </div>
+        </div>
+
+        <!-- ================= [PAGE 5] About 페이지 ================= -->
+        <div id="about-view" class="page-view">
+            <div class="section-header">
+                <h2 style="margin-top: 20px;">About FeedMoney</h2>
+                <span class="subtitle" style="margin-top: 20px;">Our Mission & Vision</span>
+            </div>
+            <div class="card policy-content">
+                <h3>Our Story</h3>
+                <p>FeedMoney was founded on the principle that financial literacy and access to quality market insights are crucial for success in the modern world. We believe that everyone, from seasoned investors to curious beginners, should have access to reliable, easy-to-understand information about the economy and investment opportunities.</p>
+                
+                <h3>What We Do</h3>
+                <p>Our platform is dedicated to curating and delivering real-time financial data, in-depth analysis, and educational content. We provide a comprehensive overview of market trends, economic events, and investment strategies through our interactive charts and original blog content. Our goal is to empower you to make informed financial decisions.</p>
+
+                <h3>Our Commitment to Quality</h3>
+                <p>In a world saturated with information, we are committed to providing content that is not only accurate and timely but also valuable and original. We strive to create a user-friendly experience that respects your time and attention. We are not a financial advisory service, and all information should be considered for informational purposes only. We are passionate about finance and technology, and we are excited to share our journey with you.</p>
             </div>
         </div>
 
@@ -425,9 +486,9 @@
 
     <footer>
         <div class="footer-links" style="margin-bottom: 12px;">
-            <a href="#" onclick="showPage('terms'); return false;">Terms of Service</a>
+            <a href="#terms">Terms of Service</a>
             <span style="margin: 0 8px; opacity: 0.5;">|</span>
-            <a href="#" onclick="showPage('privacy'); return false;">Privacy Policy</a>
+            <a href="#privacy">Privacy Policy</a>
         </div>
         <p>© 2026 FeedMoney. All rights reserved.</p>
         <button id="adminToggle" onclick="openAdminModal()">Admin Access</button>
@@ -661,23 +722,43 @@
     <script>
         function showPage(pageId) {
             document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
-            document.getElementById('nav-home').classList.remove('active');
-            document.getElementById('nav-news').classList.remove('active');
-            document.getElementById('nav-blog').classList.remove('active');
+            
+            const navLinks = document.querySelectorAll('.top-menu a');
+            navLinks.forEach(link => link.classList.remove('active'));
 
-            if (pageId === 'home') {
-                document.getElementById('main-view').classList.add('active');
-                document.getElementById('nav-home').classList.add('active');
-            } else if (pageId === 'blog') {
-                document.getElementById('blog-view').classList.add('active');
-                document.getElementById('nav-blog').classList.add('active');
-            } else if (pageId === 'terms') {
-                document.getElementById('terms-view').classList.add('active');
-            } else if (pageId === 'privacy') {
-                document.getElementById('privacy-view').classList.add('active');
+            const view = document.getElementById(pageId + '-view');
+            if (view) {
+                view.classList.add('active');
             }
+
+            const navLink = document.getElementById('nav-' + pageId);
+            if (navLink) {
+                navLink.classList.add('active');
+            } else if (pageId === 'main') {
+                // "news" is on the main page, so highlight home
+                document.getElementById('nav-home').classList.add('active');
+            }
+
             window.scrollTo(0, 0);
         }
+
+        function router() {
+            let pageId = window.location.hash.substring(1);
+            if (!pageId || pageId === 'news') {
+                pageId = 'main';
+            }
+            
+            // Special handling for pages without top nav links
+            const nonNavPages = ['terms', 'privacy'];
+            if (nonNavPages.includes(pageId)) {
+                 document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active'));
+            }
+
+            showPage(pageId);
+        }
+
+        window.addEventListener('hashchange', router);
+        window.addEventListener('DOMContentLoaded', router);
 
         // --- TradingView 위젯 동적 로드 ---
         function createWidgetScript(src, config) {
