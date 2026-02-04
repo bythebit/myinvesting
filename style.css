@@ -1,1 +1,288 @@
-/* Add styles here */
+/* --- CSS 변수 --- */
+        :root {
+            /* Light Mode */
+            --bg-body: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-main: #111827;
+            --text-sub: #6b7280;
+            --border-color: #e5e7eb;
+            
+            /* Header */
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --header-text: #111827;
+            
+            /* Brand Colors */
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --naver-color: #03c75a;
+            --delete-color: #ef4444;
+            --edit-color: #f59e0b;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode {
+            /* Dark Mode */
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --border-color: #374151;
+            
+            --header-bg: rgba(15, 23, 42, 0.85);
+            --header-text: #f3f4f6;
+            
+            --accent-color: #3b82f6;
+            --shadow-sm: none;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- 기본 스타일 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            transition: background-color 0.3s ease, color 0.3s ease;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; transition: color 0.2s; cursor: pointer; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* --- 헤더 --- */
+        header { 
+            position: sticky; top: 0;
+            background-color: var(--header-bg); color: var(--header-text);
+            padding: 16px 0; border-bottom: 1px solid var(--border-color);
+            z-index: 1000; backdrop-filter: blur(12px); transition: all 0.3s ease;
+        }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { 
+            font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 800; 
+            letter-spacing: -0.03em; color: var(--text-main); display: flex; align-items: center; gap: 4px;
+        }
+        .logo span { color: var(--accent-color); }
+        .header-right { display: flex; align-items: center; gap: 24px; }
+        .top-menu { display: flex; gap: 20px; }
+        .top-menu a {
+            color: var(--text-sub); font-weight: 600; font-size: 0.95rem; 
+            text-transform: uppercase; letter-spacing: 0.05em; position: relative;
+        }
+        .top-menu a:hover, .top-menu a.active { color: var(--accent-color); }
+        .top-menu a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            background-color: var(--accent-color); transition: width 0.3s;
+        }
+        .top-menu a:hover::after, .top-menu a.active::after { width: 100%; }
+
+        /* 테마 토글 버튼 스타일 (아이콘만) */
+        .theme-toggle-btn {
+            background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main);
+            padding: 0; border-radius: 50%; cursor: pointer; font-size: 1.2rem;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; /* 원형 유지 */
+            box-shadow: var(--shadow-sm);
+        }
+        .theme-toggle-btn:hover { background-color: var(--border-color); transform: translateY(-1px); }
+
+        /* --- 위젯 & 메인 --- */
+        .tradingview-widget-container {
+            margin-bottom: 0; border-bottom: 1px solid var(--border-color); 
+            box-shadow: var(--shadow-sm); background: var(--bg-card); position: relative; z-index: 900;
+        }
+        main { padding-top: 60px; padding-bottom: 100px; min-height: 80vh; }
+        .page-view { display: none; animation: fadeIn 0.5s ease; }
+        .page-view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            margin-bottom: 24px; 
+            padding-bottom: 16px; 
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        h2 { 
+            font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-main);
+            display: flex; align-items: center; gap: 12px; margin-bottom: 0;
+            margin-right: 24px;
+        }
+        h2::before {
+            content: ''; display: block; width: 6px; height: 24px; 
+            background: var(--accent-color); border-radius: 4px;
+        }
+        .subtitle { margin-left: auto; font-size: 0.9rem; color: var(--text-sub); font-weight: 500; }
+
+        .category-filter {
+            display: flex;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .category-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-sub);
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .category-btn:hover {
+            background: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .category-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+        
+        /* --- 그리드 레이아웃 --- */
+        .mini-chart-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 40px; 
+        }
+        tv-mini-chart {
+            width: 100%; height: 200px; display: block; border-radius: 16px; overflow: hidden;
+            box-shadow: var(--shadow-md); background-color: var(--bg-card);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        tv-mini-chart:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+        /* 콘텐츠 그리드 */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+
+        /* 블로그 스타일 */
+        .blog-card {
+            background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
+            overflow: hidden; text-decoration: none; transition: all 0.3s ease;
+            position: relative; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
+        }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--naver-color); }
+        .blog-thumbnail { width: 100%; height: 160px; object-fit: cover; border-bottom: 1px solid var(--border-color); background-color: #e5e7eb; }
+        .blog-info { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+        .blog-title {
+            font-size: 1rem; font-weight: 600; color: var(--text-main); margin-bottom: 8px; line-height: 1.4;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal;
+        }
+        .blog-date { font-size: 0.8rem; color: var(--text-sub); margin-top: auto; }
+        
+        /* 가로 스크롤 */
+        .blog-horizontal-scroll {
+            display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px;
+            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+        }
+        .blog-horizontal-scroll::-webkit-scrollbar { height: 8px; }
+        .blog-horizontal-scroll::-webkit-scrollbar-track { background: transparent; }
+        .blog-horizontal-scroll::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+        .blog-horizontal-scroll .blog-card { min-width: 280px; max-width: 280px; flex-shrink: 0; }
+        
+        /* 전체 리스트 */
+        #fullBlogList { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        #fullBlogList .blog-card { width: 100%; }
+
+        .pagination { margin-top: 40px; display: flex; justify-content: center; gap: 8px; }
+        .page-link {
+            padding: 8px 16px; border: 1px solid var(--border-color); background-color: var(--bg-card);
+            color: var(--text-main); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-weight: 600;
+        }
+        .page-link.active { background-color: var(--accent-color); color: white; border-color: var(--accent-color); }
+
+        /* 관리자 기능 */
+        .card-actions { position: absolute; top: 10px; right: 10px; display: none; gap: 4px; z-index: 10; }
+        body.admin-mode .card-actions { display: flex; }
+        .action-icon-btn {
+            background: rgba(0, 0, 0, 0.6); color: white; border-radius: 50%; width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; font-size: 14px;
+            backdrop-filter: blur(2px);
+        }
+        .action-icon-btn:hover { background: var(--accent-color); }
+        .btn-delete:hover { background: var(--delete-color); }
+        .btn-edit:hover { background: var(--edit-color); }
+
+        #adminForm {
+            display: none; background: var(--bg-card); padding: 24px;
+            border: 2px dashed var(--accent-color); border-radius: 12px; margin-bottom: 32px;
+        }
+        #adminForm.active { display: flex; flex-direction: column; gap: 12px; }
+        #adminForm input, #adminForm select { padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-body); color: var(--text-main); outline: none; }
+        #adminForm button { padding: 12px; background: var(--accent-color); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
+
+        /* 모달 */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
+        .modal-overlay.open { display: flex; }
+        .modal-content {
+            background: var(--bg-card); padding: 32px; border-radius: 20px; width: 360px; 
+            text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
+            animation: modalPop 0.3s ease; max-height: 80vh; overflow-y: auto;
+        }
+        .modal-content.large { width: 600px; text-align: left; }
+        @keyframes modalPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-content input, .modal-content select { width: 100%; padding: 14px; margin-bottom: 16px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-body); color: var(--text-main); }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 8px; }
+        .modal-buttons button { flex: 1; padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; }
+        .btn-confirm { background: var(--accent-color); color: white; }
+        .btn-delete { background: var(--delete-color); color: white; }
+        .btn-cancel { background: var(--border-color); color: var(--text-sub); }
+        .modal-close-icon { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.5rem; color: var(--text-sub); cursor: pointer; }
+        .error-msg { color: var(--delete-color); font-size: 0.9rem; margin-top: 12px; display: none; font-weight: 500;}
+
+        footer { text-align: center; padding: 60px 0; color: var(--text-sub); border-top: 1px solid var(--border-color); margin-top: 80px; font-size: 0.9rem; }
+        footer a { color: var(--text-sub); text-decoration: none; font-size: 0.85rem; }
+        #adminToggle { background: none; border: none; color: var(--text-sub); font-size: 0.85rem; cursor: pointer; margin-top: 16px; text-decoration: underline; opacity: 0.6; }
+
+         /* 약관 및 개인정보 스타일 */
+        .policy-content {
+            line-height: 1.8; color: var(--text-sub); text-align: left;
+        }
+        .policy-content h3 {
+            margin-top: 24px; margin-bottom: 12px; color: var(--text-main); font-size: 1.1rem;
+        }
+        .policy-content p {
+            margin-bottom: 16px;
+        }
+
+        .category-filter {
+            margin-left: 24px;
+        }
+
+        .category-filter select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .blog-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .mini-chart-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .content-grid { grid-template-columns: 1fr; gap: 32px; }
+            .logo { font-size: 1.4rem; }
+            .top-menu { display: flex; gap: 15px; } 
+            .top-menu a { margin-left: 0; font-size: 0.85rem; }
+            main { padding-top: 40px; }
+            #fullBlogList { grid-template-columns: 1fr; }
+            .header-right { gap: 12px; }
+        }

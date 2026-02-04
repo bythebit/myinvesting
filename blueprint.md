@@ -25,9 +25,11 @@
 *   **Blog Page**:
     *   A full grid view of all blog posts, with pagination.
     *   Content is fetched from a Firestore database.
+    *   **Category Filtering**: Users can filter blog posts by categories (Macro-Economics, Crypto, Stock Market).
 *   **Admin Functionality**:
     *   Password-protected admin access.
     *   Ability to add, delete, and reorder blog posts.
+    *   Ability to assign a category to each blog post.
 *   **Theme Toggle**: Users can switch between a light and dark theme, and the preference is saved in local storage.
 *   **Static Pages**:
     *   Terms of Service
@@ -43,7 +45,24 @@
     *   **Google Fonts**: For loading the `Montserrat` font.
     *   **jsDelivr CDN**: For loading the `Pretendard` font.
 
-## 4. Plan for AdSense Approval
+## 4. Current Development Plan
+
+### Add Blog Categories
+
+*   **Objective**: To organize blog posts into categories and allow users to filter by them.
+*   **Categories**: Macro-Economics, Crypto, Stock Market.
+*   **Implementation Steps**:
+    1.  **Refactor Code**: Move inline CSS and JavaScript from `index.html` to separate `style.css` and `main.js` files.
+    2.  **Update `index.html`**:
+        *   Add a dropdown menu for category selection in the admin form.
+        *   Add a filter bar or dropdown on the blog page to allow users to select a category.
+    3.  **Update `main.js`**:
+        *   Modify the Firestore logic to save a `category` field with each blog post.
+        *   Implement the filtering logic to display posts based on the selected category.
+        *   Update the `createCard` function to display the category on each blog post card.
+    4.  **Update `style.css`**: Add styling for the new category filter and the category label on cards.
+
+## 5. Plan for AdSense Approval
 
 The following steps have been completed to improve the website's quality and align it with Google AdSense program policies.
 

@@ -11,237 +11,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     
-    <style>
-        /* --- CSS 변수 --- */
-        :root {
-            /* Light Mode */
-            --bg-body: #f8f9fa;
-            --bg-card: #ffffff;
-            --text-main: #111827;
-            --text-sub: #6b7280;
-            --border-color: #e5e7eb;
-            
-            /* Header */
-            --header-bg: rgba(255, 255, 255, 0.85);
-            --header-text: #111827;
-            
-            /* Brand Colors */
-            --accent-color: #2563eb;
-            --accent-hover: #1d4ed8;
-            --naver-color: #03c75a;
-            --delete-color: #ef4444;
-            --edit-color: #f59e0b;
-            
-            /* Shadows */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        body.dark-mode {
-            /* Dark Mode */
-            --bg-body: #0f172a;
-            --bg-card: #1e293b;
-            --text-main: #f3f4f6;
-            --text-sub: #9ca3af;
-            --border-color: #374151;
-            
-            --header-bg: rgba(15, 23, 42, 0.85);
-            --header-text: #f3f4f6;
-            
-            --accent-color: #3b82f6;
-            --shadow-sm: none;
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-        }
-
-        /* --- 기본 스타일 --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Pretendard', sans-serif;
-            background-color: var(--bg-body); 
-            color: var(--text-main); 
-            transition: background-color 0.3s ease, color 0.3s ease;
-            scroll-behavior: smooth;
-            line-height: 1.6;
-        }
-        a { text-decoration: none; color: inherit; transition: color 0.2s; cursor: pointer; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-        /* --- 헤더 --- */
-        header { 
-            position: sticky; top: 0;
-            background-color: var(--header-bg); color: var(--header-text);
-            padding: 16px 0; border-bottom: 1px solid var(--border-color);
-            z-index: 1000; backdrop-filter: blur(12px); transition: all 0.3s ease;
-        }
-        header .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { 
-            font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 800; 
-            letter-spacing: -0.03em; color: var(--text-main); display: flex; align-items: center; gap: 4px;
-        }
-        .logo span { color: var(--accent-color); }
-        .header-right { display: flex; align-items: center; gap: 24px; }
-        .top-menu { display: flex; gap: 20px; }
-        .top-menu a {
-            color: var(--text-sub); font-weight: 600; font-size: 0.95rem; 
-            text-transform: uppercase; letter-spacing: 0.05em; position: relative;
-        }
-        .top-menu a:hover, .top-menu a.active { color: var(--accent-color); }
-        .top-menu a::after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
-            background-color: var(--accent-color); transition: width 0.3s;
-        }
-        .top-menu a:hover::after, .top-menu a.active::after { width: 100%; }
-
-        /* 테마 토글 버튼 스타일 (아이콘만) */
-        .theme-toggle-btn {
-            background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main);
-            padding: 0; border-radius: 50%; cursor: pointer; font-size: 1.2rem;
-            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px; /* 원형 유지 */
-            box-shadow: var(--shadow-sm);
-        }
-        .theme-toggle-btn:hover { background-color: var(--border-color); transform: translateY(-1px); }
-
-        /* --- 위젯 & 메인 --- */
-        .tradingview-widget-container {
-            margin-bottom: 0; border-bottom: 1px solid var(--border-color); 
-            box-shadow: var(--shadow-sm); background: var(--bg-card); position: relative; z-index: 900;
-        }
-        main { padding-top: 60px; padding-bottom: 100px; min-height: 80vh; }
-        .page-view { display: none; animation: fadeIn 0.5s ease; }
-        .page-view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .section-header {
-            display: flex; align-items: center; margin-bottom: 24px; padding-bottom: 16px; 
-            border-bottom: 2px solid var(--border-color);
-        }
-        h2 { 
-            font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-main);
-            display: flex; align-items: center; gap: 12px; margin-bottom: 0;
-        }
-        h2::before {
-            content: ''; display: block; width: 6px; height: 24px; 
-            background: var(--accent-color); border-radius: 4px;
-        }
-        .subtitle { margin-left: auto; font-size: 0.9rem; color: var(--text-sub); font-weight: 500; }
-
-        /* --- 그리드 레이아웃 --- */
-        .mini-chart-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 40px; 
-        }
-        tv-mini-chart {
-            width: 100%; height: 200px; display: block; border-radius: 16px; overflow: hidden;
-            box-shadow: var(--shadow-md); background-color: var(--bg-card);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        tv-mini-chart:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-
-        /* 콘텐츠 그리드 */
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
-
-        /* 블로그 스타일 */
-        .blog-card {
-            background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
-            overflow: hidden; text-decoration: none; transition: all 0.3s ease;
-            position: relative; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
-        }
-        .blog-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--naver-color); }
-        .blog-thumbnail { width: 100%; height: 160px; object-fit: cover; border-bottom: 1px solid var(--border-color); background-color: #e5e7eb; }
-        .blog-info { padding: 16px; flex: 1; display: flex; flex-direction: column; }
-        .blog-title {
-            font-size: 1rem; font-weight: 600; color: var(--text-main); margin-bottom: 8px; line-height: 1.4;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal;
-        }
-        .blog-date { font-size: 0.8rem; color: var(--text-sub); margin-top: auto; }
-        
-        /* 가로 스크롤 */
-        .blog-horizontal-scroll {
-            display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px;
-            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-        }
-        .blog-horizontal-scroll::-webkit-scrollbar { height: 8px; }
-        .blog-horizontal-scroll::-webkit-scrollbar-track { background: transparent; }
-        .blog-horizontal-scroll::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
-        .blog-horizontal-scroll .blog-card { min-width: 280px; max-width: 280px; flex-shrink: 0; }
-        
-        /* 전체 리스트 */
-        #fullBlogList { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-        #fullBlogList .blog-card { width: 100%; }
-
-        .pagination { margin-top: 40px; display: flex; justify-content: center; gap: 8px; }
-        .page-link {
-            padding: 8px 16px; border: 1px solid var(--border-color); background-color: var(--bg-card);
-            color: var(--text-main); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-weight: 600;
-        }
-        .page-link.active { background-color: var(--accent-color); color: white; border-color: var(--accent-color); }
-
-        /* 관리자 기능 */
-        .card-actions { position: absolute; top: 10px; right: 10px; display: none; gap: 4px; z-index: 10; }
-        body.admin-mode .card-actions { display: flex; }
-        .action-icon-btn {
-            background: rgba(0, 0, 0, 0.6); color: white; border-radius: 50%; width: 28px; height: 28px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; font-size: 14px;
-            backdrop-filter: blur(2px);
-        }
-        .action-icon-btn:hover { background: var(--accent-color); }
-        .btn-delete:hover { background: var(--delete-color); }
-
-        #adminForm {
-            display: none; background: var(--bg-card); padding: 24px;
-            border: 2px dashed var(--accent-color); border-radius: 12px; margin-bottom: 32px;
-        }
-        #adminForm.active { display: flex; flex-direction: column; gap: 12px; }
-        #adminForm input { padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-body); color: var(--text-main); outline: none; }
-        #adminForm button { padding: 12px; background: var(--accent-color); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
-
-        /* 모달 */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
-        .modal-overlay.open { display: flex; }
-        .modal-content {
-            background: var(--bg-card); padding: 32px; border-radius: 20px; width: 360px; 
-            text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
-            animation: modalPop 0.3s ease; max-height: 80vh; overflow-y: auto;
-        }
-        .modal-content.large { width: 600px; text-align: left; }
-        @keyframes modalPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal-content input { width: 100%; padding: 14px; margin-bottom: 24px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-body); color: var(--text-main); }
-        .modal-buttons { display: flex; gap: 12px; }
-        .modal-buttons button { flex: 1; padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; }
-        .btn-confirm { background: var(--accent-color); color: white; }
-        .btn-delete { background: var(--delete-color); color: white; }
-        .btn-cancel { background: var(--border-color); color: var(--text-sub); }
-        .modal-close-icon { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.5rem; color: var(--text-sub); cursor: pointer; }
-        .error-msg { color: var(--delete-color); font-size: 0.9rem; margin-top: 12px; display: none; font-weight: 500;}
-
-        footer { text-align: center; padding: 60px 0; color: var(--text-sub); border-top: 1px solid var(--border-color); margin-top: 80px; font-size: 0.9rem; }
-        footer a { color: var(--text-sub); text-decoration: none; font-size: 0.85rem; }
-        #adminToggle { background: none; border: none; color: var(--text-sub); font-size: 0.85rem; cursor: pointer; margin-top: 16px; text-decoration: underline; opacity: 0.6; }
-
-         /* 약관 및 개인정보 스타일 */
-        .policy-content {
-            line-height: 1.8; color: var(--text-sub); text-align: left;
-        }
-        .policy-content h3 {
-            margin-top: 24px; margin-bottom: 12px; color: var(--text-main); font-size: 1.1rem;
-        }
-        .policy-content p {
-            margin-bottom: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .mini-chart-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-            .content-grid { grid-template-columns: 1fr; gap: 32px; }
-            .logo { font-size: 1.4rem; }
-            .top-menu { display: flex; gap: 15px; } 
-            .top-menu a { margin-left: 0; font-size: 0.85rem; }
-            main { padding-top: 40px; }
-            #fullBlogList { grid-template-columns: 1fr; }
-            .header-right { gap: 12px; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
     <!-- 구글 애드센스 -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3978570243079752"
      crossorigin="anonymous"></script>
@@ -253,7 +23,7 @@
     <!-- 헤더 -->
     <header>
         <div class="container">
-            <div class="logo" onclick="window.location.hash = '#home'">FEED <span>MONEY</span></div>
+            <div class="logo">FEED <span>MONEY</span></div>
             <div class="header-right">
                 <nav class="top-menu">
                     <a id="nav-home" href="#home" class="active">HOME</a>
@@ -262,7 +32,7 @@
                     <a id="nav-about" href="#about">ABOUT</a>
                 </nav>
 
-                <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">
+                <button class="theme-toggle-btn" id="themeBtn">
                     <span id="themeIcon">🌙</span>
                 </button>
             </div>
@@ -301,8 +71,8 @@
 
             <!-- Market Overview -->
             <div class="section-header">
-                <h2 style="margin-top: 20px;">Market Overview</h2>
-                <span class="subtitle" style="margin-top: 20px;">Real-time Global Indices</span>
+                <h2>Market Overview</h2>
+                <span class="subtitle">Real-time Global Indices</span>
             </div>
 
             <div class="mini-chart-grid" id="widgetContainer">
@@ -324,7 +94,7 @@
             <section id="blog-preview" style="margin-bottom: 60px;">
                 <div class="section-header">
                     <h2>My Insights</h2>
-                    <span class="subtitle" style="color: var(--naver-color); font-weight: 700; cursor:pointer;" onclick="showPage('blog')">View All ></span>
+                    <span id="viewAllBtn" class="subtitle" style="color: var(--naver-color); font-weight: 700; cursor:pointer;">View All ></span>
                 </div>
                 
                 <!-- 홈 화면에서는 가로 스크롤만 보임 -->
@@ -362,8 +132,13 @@
         <!-- ================= [PAGE 2] 블로그 전용 페이지 ================= -->
         <div id="blog-view" class="page-view">
             <div class="section-header">
-                <h2 style="margin-top: 20px;">All Blog Posts</h2>
-                <span class="subtitle" style="margin-top: 20px;">Total Insights</span>
+                <h2>All Blog Posts</h2>
+                <div class="category-filter">
+                    <button class="category-btn active" data-category="all">All</button>
+                    <button class="category-btn" data-category="Macro-Economics">Macro-Economics</button>
+                    <button class="category-btn" data-category="Crypto">Crypto</button>
+                    <button class="category-btn" data-category="Stock Market">Stock Market</button>
+                </div>
             </div>
 
             <!-- 블로그 관리 및 목록 -->
@@ -373,6 +148,11 @@
                     <input type="text" id="postTitleInput" placeholder="포스팅 제목">
                     <input type="text" id="postUrlInput" placeholder="블로그 글 주소">
                     <input type="text" id="postImageInput" placeholder="썸네일 이미지 주소">
+                    <select id="postCategoryInput">
+                        <option value="Macro-Economics">Macro-Economics</option>
+                        <option value="Crypto">Crypto</option>
+                        <option value="Stock Market">Stock Market</option>
+                    </select>
                     <button id="addPostBtn">블로그 포스팅 등록하기</button>
                 </div>
 
@@ -388,8 +168,8 @@
         <!-- ================= [PAGE 3] 이용약관 페이지 ================= -->
         <div id="terms-view" class="page-view">
             <div class="section-header">
-                <h2 style="margin-top: 20px;">Terms of Service</h2>
-                <span class="subtitle" style="margin-top: 20px;">Effective Date: 2026-01-31</span>
+                <h2>Terms of Service</h2>
+                <span class="subtitle">Effective Date: 2026-01-31</span>
             </div>
             <div class="card policy-content">
                 <h3>1. Acceptance of Terms</h3>
@@ -424,8 +204,8 @@
         <!-- ================= [PAGE 4] 개인정보처리방침 페이지 ================= -->
         <div id="privacy-view" class="page-view">
             <div class="section-header">
-                <h2 style="margin-top: 20px;">Privacy Policy</h2>
-                <span class="subtitle" style="margin-top: 20px;">Effective Date: 2026-01-31</span>
+                <h2>Privacy Policy</h2>
+                <span class="subtitle">Effective Date: 2026-01-31</span>
             </div>
             <div class="card policy-content">
                 <h3>1. Introduction</h3>
@@ -467,8 +247,8 @@
         <!-- ================= [PAGE 5] About 페이지 ================= -->
         <div id="about-view" class="page-view">
             <div class="section-header">
-                <h2 style="margin-top: 20px;">About FeedMoney</h2>
-                <span class="subtitle" style="margin-top: 20px;">Our Mission & Vision</span>
+                <h2>About FeedMoney</h2>
+                <span class="subtitle">Our Mission & Vision</span>
             </div>
             <div class="card policy-content">
                 <h3>Our Story</h3>
@@ -491,7 +271,7 @@
             <a href="#privacy">Privacy Policy</a>
         </div>
         <p>© 2026 FeedMoney. All rights reserved.</p>
-        <button id="adminToggle" onclick="openAdminModal()">Admin Access</button>
+        <button id="adminToggle">Admin Access</button>
     </footer>
 
     <!-- 모달: 비밀번호 입력 -->
@@ -499,10 +279,10 @@
         <div class="modal-content">
             <h3>🔒 Admin Access</h3>
             <p>비밀번호를 입력하세요</p>
-            <input type="password" id="modalPasswordInput" placeholder="Password" onkeypress="handleEnter(event)">
+            <input type="password" id="modalPasswordInput" placeholder="Password">
             <div class="modal-buttons">
-                <button class="btn-confirm" onclick="checkPassword()">확인</button>
-                <button class="btn-cancel" onclick="closeAdminModal()">취소</button>
+                <button class="btn-confirm" id="passwordConfirmBtn">확인</button>
+                <button class="btn-cancel" id="passwordCancelBtn">취소</button>
             </div>
             <p id="passwordError" class="error-msg">비밀번호가 일치하지 않습니다.</p>
         </div>
@@ -514,379 +294,32 @@
             <h3>🗑️ 삭제 확인</h3>
             <p>정말 이 항목을 삭제하시겠습니까?<br>(복구할 수 없습니다)</p>
             <div class="modal-buttons">
-                <button class="btn-delete" onclick="confirmDelete()">삭제</button>
-                <button class="btn-cancel" onclick="closeDeleteModal()">취소</button>
+                <button class="btn-delete" id="deleteConfirmBtn">삭제</button>
+                <button class="btn-cancel" id="deleteCancelBtn">취소</button>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy, serverTimestamp, updateDoc } 
-            from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+    <!-- 모달: 포스트 수정 -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content large">
+            <h3>✏️ 포스트 수정</h3>
+            <input type="hidden" id="editPostId">
+            <input type="text" id="editPostTitleInput" placeholder="포스팅 제목">
+            <input type="text" id="editPostUrlInput" placeholder="블로그 글 주소">
+            <input type="text" id="editPostImageInput" placeholder="썸네일 이미지 주소">
+            <select id="editPostCategoryInput">
+                <option value="Macro-Economics">Macro-Economics</option>
+                <option value="Crypto">Crypto</option>
+                <option value="Stock Market">Stock Market</option>
+            </select>
+            <div class="modal-buttons">
+                <button class="btn-confirm" id="saveChangesBtn">수정하기</button>
+                <button class="btn-cancel" id="editCancelBtn">취소</button>
+            </div>
+        </div>
+    </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDWLpX7CwIJWjjOkicgRqKD36KTmCNuq2I",
-            authDomain: "bitggobuk.firebaseapp.com",
-            projectId: "bitggobuk",
-            storageBucket: "bitggobuk.firebasestorage.app",
-            messagingSenderId: "140052770311",
-            appId: "1:140052770311:web:113b16c269631a72a944a2",
-            measurementId: "G-1G8HYRDLNK"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getFirestore(app);
-
-        // --- [기존] 블로그 기능 (유지) ---
-        const randomImages = [
-            "https://images.unsplash.com/photo-1611974765270-ca12586343bb?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1535320903710-d9cf113d20c5?auto=format&fit=crop&w=600&q=80"
-        ];
-
-        let allBlogPosts = [];
-        let currentDocs = [];
-        const postsPerPage = 9;
-        let currentPage = 1;
-
-        function createCard(post) {
-            const cardLink = document.createElement('a');
-            cardLink.href = post.url;
-            cardLink.target = "_blank";
-            cardLink.className = "blog-card";
-            
-            let imgUrl = post.image || randomImages[0];
-            const img = document.createElement('img');
-            img.src = imgUrl;
-            img.className = "blog-thumbnail";
-            img.onerror = function() { this.src = randomImages[0]; };
-            
-            const infoDiv = document.createElement('div');
-            infoDiv.className = "blog-info";
-            
-            const title = document.createElement('div');
-            title.className = "blog-title";
-            title.textContent = post.title;
-            
-            const date = document.createElement('div');
-            date.className = "blog-date";
-            let dateStr = "";
-            if (post.createdAt) {
-                const d = post.createdAt.toDate();
-                dateStr = `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-            }
-            date.textContent = dateStr;
-
-            infoDiv.appendChild(title);
-            infoDiv.appendChild(date);
-            
-            const actionGroup = document.createElement('div');
-            actionGroup.className = 'card-actions';
-
-            const leftBtn = document.createElement('button');
-            leftBtn.className = 'action-icon-btn';
-            leftBtn.innerHTML = "◀";
-            leftBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); movePost(post.id, 'left'); };
-
-            const rightBtn = document.createElement('button');
-            rightBtn.className = 'action-icon-btn';
-            rightBtn.innerHTML = "▶";
-            rightBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); movePost(post.id, 'right'); };
-
-            const delBtn = document.createElement('button');
-            delBtn.className = 'action-icon-btn btn-delete';
-            delBtn.innerHTML = "✕"; 
-            delBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); window.openDeleteModal(post.id, 'blog'); };
-
-            actionGroup.appendChild(leftBtn);
-            actionGroup.appendChild(delBtn);
-            actionGroup.appendChild(rightBtn);
-
-            cardLink.appendChild(img);
-            cardLink.appendChild(infoDiv);
-            cardLink.appendChild(actionGroup);
-            return cardLink;
-        }
-
-        function renderBlogPage(page) {
-            currentPage = page;
-            const fullList = document.getElementById('fullBlogList');
-            fullList.innerHTML = "";
-            const startIndex = (page - 1) * postsPerPage;
-            const endIndex = startIndex + postsPerPage;
-            const postsToShow = allBlogPosts.slice(startIndex, endIndex);
-            postsToShow.forEach(post => fullList.appendChild(createCard(post)));
-            renderPaginationControls();
-        }
-
-        function renderPaginationControls() {
-            const paginationContainer = document.getElementById('pagination');
-            paginationContainer.innerHTML = "";
-            const totalPages = Math.ceil(allBlogPosts.length / postsPerPage);
-            for (let i = 1; i <= totalPages; i++) {
-                const pageLink = document.createElement('a');
-                pageLink.href = "#"; pageLink.textContent = i; pageLink.className = "page-link";
-                if (i === currentPage) pageLink.classList.add('active');
-                pageLink.onclick = (e) => { e.preventDefault(); renderBlogPage(i); }
-                paginationContainer.appendChild(pageLink);
-            }
-        }
-
-        function startListeningBlog() {
-            const q = query(collection(db, "blogPosts"), orderBy("order", "desc"));
-            onSnapshot(q, (snapshot) => {
-                const homeList = document.getElementById('linksList');
-                homeList.innerHTML = ""; 
-                allBlogPosts = []; currentDocs = [];
-
-                if (snapshot.empty) {
-                    homeList.innerHTML = "<p style='color:var(--text-sub)'>No posts.</p>";
-                    return;
-                }
-
-                snapshot.forEach((docSnap) => {
-                    const post = docSnap.data();
-                    const id = docSnap.id;
-                    allBlogPosts.push({ id, ...post });
-                    currentDocs.push({ id, ...post, ref: docSnap.ref });
-                });
-                
-                const homePosts = allBlogPosts.slice(0, 6);
-                homePosts.forEach(post => homeList.appendChild(createCard(post)));
-                renderBlogPage(1);
-            });
-        }
-        startListeningBlog();
-
-        async function movePost(currentId, direction) {
-            const currentIndex = currentDocs.findIndex(doc => doc.id === currentId);
-            if (currentIndex === -1) return;
-            let targetIndex = direction === 'left' ? currentIndex - 1 : currentIndex + 1;
-            if (targetIndex < 0 || targetIndex >= currentDocs.length) return;
-            const currentItem = currentDocs[currentIndex];
-            const targetItem = currentDocs[targetIndex];
-            const currentOrder = currentItem.order || 0;
-            const targetOrder = targetItem.order || 0;
-            try {
-                await updateDoc(doc(db, "blogPosts", currentItem.id), { order: targetOrder });
-                await updateDoc(doc(db, "blogPosts", targetItem.id), { order: currentOrder });
-            } catch (e) { console.error("Order error:", e); }
-        }
-
-        const addPostBtn = document.getElementById('addPostBtn');
-        addPostBtn.addEventListener('click', async () => {
-            const titleInput = document.getElementById('postTitleInput');
-            const urlInput = document.getElementById('postUrlInput');
-            const imageInput = document.getElementById('postImageInput');
-            const title = titleInput.value.trim();
-            let url = urlInput.value.trim();
-            let image = imageInput.value.trim();
-            if (!title || !url) { alert("Title and URL required."); return; }
-            if (!url.startsWith('http')) url = 'https://' + url;
-            if (!image) image = randomImages[0];
-            try {
-                await addDoc(collection(db, "blogPosts"), {
-                    title, url, image, createdAt: serverTimestamp(), order: Date.now()
-                });
-                titleInput.value = ""; urlInput.value = ""; imageInput.value = "";
-            } catch (e) { console.error(e); }
-        });
-
-        // --- 통합 삭제 로직 (블로그 + 관심종목) ---
-        async function deleteData(id, type) {
-            try {
-                if(type === 'blog') {
-                    await deleteDoc(doc(db, "blogPosts", id));
-                } else if (type === 'watchlist') {
-                    const user = auth.currentUser;
-                    if(user) {
-                        await deleteDoc(doc(db, `users/${user.uid}/watchlist`, id));
-                    }
-                }
-            } catch (e) { console.error(e); }
-        }
-        window.deleteData = deleteData;
-        window.movePost = movePost;
-    </script>
-
-    <!-- UI 스크립트 -->
-    <script>
-        function showPage(pageId) {
-            // Hide all page-views and remove active class from nav links
-            document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active'));
-
-            // Determine the correct view to show. 'home' and 'news' are on the 'main-view'.
-            const viewId = (pageId === 'home' || pageId === 'news') ? 'main' : pageId;
-            const view = document.getElementById(viewId + '-view');
-            if (view) {
-                view.classList.add('active');
-            }
-
-            // Determine the correct nav link to activate. 'news' section should keep 'home' active.
-            const navId = (pageId === 'news') ? 'home' : pageId;
-            const navLink = document.getElementById('nav-' + navId);
-            if (navLink) {
-                navLink.classList.add('active');
-            }
-        }
-
-        function router() {
-            let pageId = window.location.hash.substring(1);
-            if (!pageId) {
-                pageId = 'home';
-            }
-
-            showPage(pageId);
-
-            // Handle scrolling after the view is shown
-            if (pageId === 'news') {
-                setTimeout(() => {
-                    const section = document.getElementById('news');
-                    if (section) {
-                        // Scroll the section into view
-                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 100); // A small delay ensures the view is rendered
-            } else {
-                // For all other pages, scroll to the top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        window.addEventListener('hashchange', router);
-
-        // --- TradingView 위젯 동적 로드 ---
-        function createWidgetScript(src, config) {
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = src;
-            script.async = true;
-            script.innerHTML = JSON.stringify(config);
-            return script;
-        }
-
-        function loadWidgets(theme) {
-            const newsContainer = document.getElementById('newsWidgetContainer');
-            if(newsContainer) {
-                newsContainer.innerHTML = '<div class="tradingview-widget-container__widget"></div>';
-                const newsConfig = {
-                    "displayMode": "regular", "feedMode": "all_symbols", 
-                    "colorTheme": theme, "isTransparent": false, "locale": "en", "width": "100%", "height": 550
-                };
-                newsContainer.appendChild(createWidgetScript("https://s3.tradingview.com/external-embedding/embed-widget-timeline.js", newsConfig));
-            }
-            const calContainer = document.getElementById('calendarWidgetContainer');
-            if(calContainer) {
-                calContainer.innerHTML = '<div class="tradingview-widget-container__widget"></div>';
-                const calConfig = {
-                    "colorTheme": theme, "isTransparent": false, "locale": "en",
-                    "countryFilter": "ar,au,br,ca,cn,fr,de,in,id,it,jp,kr,mx,ru,sa,za,tr,gb,us,eu",
-                    "importanceFilter": "-1,0,1", "width": "100%", "height": 550
-                };
-                calContainer.appendChild(createWidgetScript("https://s3.tradingview.com/external-embedding/embed-widget-events.js", calConfig));
-            }
-            const watchlistCharts = document.querySelectorAll('#myWatchlistGrid tv-mini-chart');
-            watchlistCharts.forEach(chart => chart.setAttribute('theme', theme));
-        }
-
-        // --- 관리자 모달 ---
-        function openAdminModal() {
-            const form1 = document.getElementById('adminForm');
-            if (form1.classList.contains('active')) {
-                form1.classList.remove('active');
-                document.body.classList.remove('admin-mode');
-                return;
-            }
-            document.getElementById('passwordModal').classList.add('open');
-            document.getElementById('modalPasswordInput').value = '';
-            document.getElementById('passwordError').style.display = 'none';
-            document.getElementById('modalPasswordInput').focus();
-        }
-
-        function closeAdminModal() {
-            document.getElementById('passwordModal').classList.remove('open');
-        }
-
-        function checkPassword() {
-            const input = document.getElementById('modalPasswordInput');
-            const error = document.getElementById('passwordError');
-            if (input.value === "1234") {
-                closeAdminModal();
-                document.getElementById('adminForm').classList.add('active');
-                document.body.classList.add('admin-mode');
-            } else {
-                error.style.display = 'block'; input.value = ''; input.focus();
-            }
-        }
-
-        function handleEnter(e) { if (e.key === 'Enter') checkPassword(); }
-
-        // --- 삭제 모달 ---
-        let deleteTarget = { id: null, type: null };
-        function openDeleteModal(id, type) {
-            deleteTarget = { id, type };
-            document.getElementById('deleteModal').classList.add('open');
-        }
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.remove('open');
-            deleteTarget = { id: null, type: null };
-        }
-        function confirmDelete() {
-            if (deleteTarget.id && window.deleteData) {
-                window.deleteData(deleteTarget.id, deleteTarget.type);
-            }
-            closeDeleteModal();
-        }
-        window.openDeleteModal = openDeleteModal;
-
-        // --- 테마 ---
-        function toggleTheme() {
-            const body = document.body;
-            const themeIcon = document.getElementById('themeIcon');
-            body.classList.toggle('dark-mode');
-            const isDark = body.classList.contains('dark-mode');
-            const newTheme = isDark ? 'dark' : 'light';
-
-            if (isDark) {
-                themeIcon.textContent = '☀️';
-            }
-            updateCharts(newTheme);
-            loadWidgets(newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
-
-        function updateCharts(theme) {
-            const charts = document.querySelectorAll('.mini-chart-grid tv-mini-chart');
-            charts.forEach(chart => {
-                chart.setAttribute('theme', theme);
-            });
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            // Load theme
-            const savedTheme = localStorage.getItem('theme');
-            let initialTheme = 'light';
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-mode');
-                document.getElementById('themeIcon').textContent = '☀️';
-                initialTheme = 'dark';
-            }
-            updateCharts(initialTheme);
-            loadWidgets(initialTheme);
-            
-            // Initial routing
-            router();
-        });
-    </script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>
